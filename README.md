@@ -54,7 +54,7 @@ Everything is set up to run the app using docker and docker-compose.
 Since there's two separate repos (frontend and backend), the image for the frontend needs to be generated first. To do that, run the following command in the root folder of the frontend project:
 
 ```
-docker build . -t image-service-frontend
+docker build . -t gpt-service-frontend
 ```
 
 Then you can just run the docker compose in this project to have everything up and running:
