@@ -3,7 +3,12 @@ import users.services.users as services
 import users.services.exceptions as exceptions
 from users.services.authentication import get_password_hash
 import users.services.schemas as user_schemas
-from tests.mocks.mock_db_session import MockDBSession, MockDBReturn
+from tests.mocks.mock_db_session import (
+    MockDBSession,
+    MockDBReturn,
+    get_patched_db_session,
+    get_patched_db_return,
+)
 from tests.mocks.users import get_mock_user
 
 mock_username = "username"
@@ -16,16 +21,9 @@ def mock_get_user_happy_path(mocker):
     def mock_get_user_in_list():
         return [get_mock_user(mock_username, mock_password)]
 
-    first_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBReturn.first",
-        new_callable=mocker.PropertyMock,
-        return_value=mock_get_user_in_list,
-    )
-    execute_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.execute",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBReturn,
-    )
+    first_mock = get_patched_db_return(mocker, "first", mock_get_user_in_list)
+    execute_mock = get_patched_db_session(mocker, "execute", MockDBReturn)
+
     return first_mock, execute_mock
 
 
@@ -45,16 +43,9 @@ def mock_get_user_fails(mocker):
     def mock_none():
         return []
 
-    first_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBReturn.first",
-        new_callable=mocker.PropertyMock,
-        return_value=mock_none,
-    )
-    execute_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.execute",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBReturn,
-    )
+    first_mock = get_patched_db_return(mocker, "first", mock_none)
+    execute_mock = get_patched_db_session(mocker, "execute", MockDBReturn)
+
     return first_mock, execute_mock
 
 
@@ -75,23 +66,9 @@ def mock_add_user_happy_path(mocker):
     def mock_refresh_user(user):
         return get_mock_user(mock_username, mock_password)
 
-    add_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.add",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBSession.add,
-    )
-
-    commit_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.commit",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBSession.commit,
-    )
-
-    refresh_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.refresh",
-        new_callable=mocker.PropertyMock,
-        return_value=mock_refresh_user,
-    )
+    add_mock = get_patched_db_session(mocker, "add", MockDBSession.add)
+    commit_mock = get_patched_db_session(mocker, "commit", MockDBSession.commit)
+    refresh_mock = get_patched_db_session(mocker, "refresh", mock_refresh_user)
 
     return add_mock, commit_mock, refresh_mock
 
@@ -123,23 +100,9 @@ def mock_add_user_happy_path(mocker):
     def mock_refresh_user(user):
         return get_mock_user(mock_username, mock_password)
 
-    add_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.add",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBSession.add,
-    )
-
-    commit_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.commit",
-        new_callable=mocker.PropertyMock,
-        return_value=MockDBSession.commit,
-    )
-
-    refresh_mock = mocker.patch(
-        "tests.mocks.mock_db_session.MockDBSession.refresh",
-        new_callable=mocker.PropertyMock,
-        return_value=mock_refresh_user,
-    )
+    add_mock = get_patched_db_session(mocker, "add", MockDBSession.add)
+    commit_mock = get_patched_db_session(mocker, "commit", MockDBSession.commit)
+    refresh_mock = get_patched_db_session(mocker, "refresh", mock_refresh_user)
 
     return add_mock, commit_mock, refresh_mock
 
