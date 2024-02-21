@@ -1,4 +1,4 @@
-FROM python:3.8.10
+FROM python:3.12.1
 
 WORKDIR /src/
 
@@ -28,7 +28,7 @@ ADD src /src/src
 
 ENV PYTHONPATH=/src
 ENV PORT=${PORT:-8000}
-ENV APP_MODULE=${APP_MODULE:-"main:app"}
+ENV APP_MODULE=${APP_MODULE:-"main:src"}
 ENV HOST=${HOST:-0.0.0.0}
 
 EXPOSE ${PORT}
