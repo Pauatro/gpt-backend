@@ -43,10 +43,12 @@ If you're running the project directly using docker-compose you won't need to do
 To run the backend in development mode, run the following command inside the src folder:
 
 ```
-uvicorn main:app -p 8008 --reload
+uvicorn main:app --port 8008 --reload
 ```
 
 The app will run on port 8008.
+
+Importantly, you will need to install postgresql locally and have a running db instance with the variables listed above for the .env file
 
 ## Running the Dockerized version
 

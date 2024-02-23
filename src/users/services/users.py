@@ -5,7 +5,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import ValidationError
 from shared.database import get_db_session
-from shared.logging import get_logger
+from shared.logging.logging import get_logger
 from users.data.models import UserModel
 from users.services.schemas import User, CreateUser
 from users.services.exceptions import (
