@@ -1,10 +1,14 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
+import os
 
 
 class Settings(BaseSettings):
     # This is in case we want to use a .env too, but environment vars are prioritized
-    model_config = SettingsConfigDict(env_file="../.env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(
+        env_file=os.path.join(os.path.dirname(__file__), "../../.env"),
+        env_file_encoding="utf-8",
+    )
 
     api_v1_str: str = "/api/v1"
     backend_cors_origins: List[str] = [
