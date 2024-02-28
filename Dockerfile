@@ -20,19 +20,11 @@ RUN curl -sSL https://install.python-poetry.org/ | POETRY_HOME=/opt/poetry pytho
     poetry config virtualenvs.create false
 
 # Copy poetry.lock in case it doesn't exist in the repo
-COPY ./pyproject.toml ./poetry.lock /src/
+COPY ./pyproject.toml ./poetry.lock ./alembic.ini /src/
 
 RUN bash -c "poetry install --no-root"
 
 ADD src /src/src
 
-ENV PYTHONPATH=/src
 ENV PORT=${PORT:-8000}
-ENV APP_MODULE=${APP_MODULE:-"main:src"}
-ENV HOST=${HOST:-0.0.0.0}
-
 EXPOSE ${PORT}
-
-WORKDIR /src/src
-
-CMD uvicorn ${APP_MODULE} --host ${HOST} --port ${PORT}
