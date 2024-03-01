@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from shared.schemas import EntityBase
+from shared.services.schemas import EntityBase
 
 
 class UserBase(BaseModel):

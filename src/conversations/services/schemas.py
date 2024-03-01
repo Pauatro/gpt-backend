@@ -1,6 +1,6 @@
 from pydantic import BaseModel, UUID4
 from typing import List
-from shared.schemas import EntityBase
+from shared.services.schemas import EntityBase
 
 
 class Iteration(EntityBase):
