@@ -1,19 +1,13 @@
-from pydantic import BaseModel, UUID4
-from datetime import datetime
+from pydantic import BaseModel
+from shared.services.schemas import EntityBase
 
 
 class UserBase(BaseModel):
     username: str
 
 
-class User(UserBase):
-    id: UUID4
+class User(UserBase, EntityBase):
     hashed_password: str
-    created_at: datetime
-    updated_at: datetime
-
-    class Config:
-        from_attributes = True
 
 
 class CreateUser(UserBase):
