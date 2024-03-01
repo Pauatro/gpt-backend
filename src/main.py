@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 from shared.settings import Settings
 from users.endpoints import endpoints as users
+from conversations.endpoints import endpoints as conversations
 
 logging.config.fileConfig("shared/logging/logging.conf", disable_existing_loggers=False)
 
@@ -18,3 +19,4 @@ app.add_middleware(
 )
 
 app.include_router(users.router)
+app.include_router(conversations.router)
